@@ -1,7 +1,7 @@
-class CreatePages < ActiveRecord::Migration
+class CreateSheets < ActiveRecord::Migration
 
   def self.up
-    create_table :pages do |t|
+    create_table :sheets do |t|
       t.string   :title
       t.text     :description
       t.integer  :recipe_id
@@ -14,12 +14,12 @@ class CreatePages < ActiveRecord::Migration
       t.text     :meta_description
     end
 
-    add_index :pages, 'slug'
-    add_index :pages, 'url'
+    add_index :sheets, 'slug'
+    add_index :sheets, 'url'
   end
 
   def self.down
-    drop_table :pages
+    drop_table :sheets
   end
 
 end

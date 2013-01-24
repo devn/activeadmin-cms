@@ -47,9 +47,9 @@ CarrierWave.configure do |config|
 end
 ```
 
-### Generate a page class
+### Generate a sheet class
 ```console
-> rails g active_admin:cms:page Page
+> rails g active_admin:cms:sheet Sheet
 ```
 ### Generate a recipe
 ```console

@@ -1,28 +1,28 @@
-ActiveAdmin.register <%= class_name %> do
+ActiveAdmin.register Sheet do
 
-  form :partial => 'admin/cms/pages/form'
+  form :partial => 'admin/cms/sheets/form'
 
   filter :title
 
   index :as => :table do
-    column 'Title' do |page|
-      link_to page.title, edit_admin_page_path(page)
+    column 'Title' do |sheet|
+      link_to sheet.title, edit_admin_sheet_path(sheet)
     end
     column :description
     column :url
   end
 
-  show do |page|
+  show do |sheet|
     attributes_table do
       row :title
       row :description do
-        page.description.to_html.html_safe
+        sheet.description.to_html.html_safe
       end
       row :slug
       row :url
     end
-  
-    #render 'admin/cms/pages/show'
+
+    #render 'admin/cms/sheets/show'
 
     active_admin_comments
   end
@@ -30,7 +30,7 @@ ActiveAdmin.register <%= class_name %> do
   controller do
     def update
       super
-      @page.set_value params[:content]
+      @sheet.set_value params[:content]
     end
   end
 

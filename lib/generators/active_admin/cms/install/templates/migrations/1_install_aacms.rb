@@ -1,17 +1,17 @@
 class InstallAacms < ActiveRecord::Migration
   def self.up
     create_table :content do |t|
-      t.integer  "page_id"
+      t.integer  "sheet_id"
       t.text     "text"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.string   "content_type_class"
       t.string   "key"
       t.string   "image"
-      t.string   "file" 
+      t.string   "file"
     end
 
-    add_index "content", ["page_id", "key"], :name => "index_content_on_page_id_and_key"
+    add_index "content", ["sheet_id", "key"], :name => "index_content_on_sheet_id_and_key"
 
     create_table :recipes do |t|
       t.string   "title"

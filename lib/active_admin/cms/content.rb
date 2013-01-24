@@ -1,7 +1,7 @@
 module ActiveAdmin
   module Cms
     class Content < ActiveRecord::Base
-      
+
       include ActionView::Helpers
       include Haml::Helpers
 
@@ -9,14 +9,14 @@ module ActiveAdmin
         include ActsAsMarkup::ActiveRecordExtension::ClassMethods
       end
 
-      attr_accessible :page, :key, :text, :image, :file, :content_type_class
+      attr_accessible :sheet, :key, :text, :image, :file, :content_type_class
 
       self.table_name = 'content'
 
-      belongs_to :page, :class_name => 'Cms::Page'
-    
+      belongs_to :sheet, :class_name => 'Cms::Sheet'
+
       acts_as_markdown :text
-      
+
       after_initialize do
         self.class.mount_uploader :image, content_type.image_uploader
         self.class.mount_uploader :file, ActiveAdmin::Cms::Uploaders::ContentFileUploader

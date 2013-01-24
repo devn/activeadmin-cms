@@ -1,10 +1,10 @@
 require "generator_spec/test_case"
-require 'generators/active_admin/cms/page/page_generator'
+require 'generators/active_admin/cms/sheet/sheet_generator'
 
-describe ActiveAdmin::Cms::PageGenerator do
+describe ActiveAdmin::Cms::SheetGenerator do
   include GeneratorSpec::TestCase
   destination File.expand_path("../../tmp", __FILE__)
-  arguments %w(Page)
+  arguments %w(Sheet)
 
   before(:all) do
     prepare_destination
@@ -16,19 +16,19 @@ describe ActiveAdmin::Cms::PageGenerator do
       no_file "test.rb"
       directory "app" do
         directory "admin" do
-          file "pages.rb" do
-            contains 'ActiveAdmin.register Page'
+          file "sheets.rb" do
+            contains 'ActiveAdmin.register Sheet'
            end
         end
         directory "models" do
-          file "page.rb" do
-            contains "class Page < ActiveAdmin::Cms::Page"
+          file "sheet.rb" do
+            contains "class Sheet < ActiveAdmin::Cms::Sheet"
           end
         end
         directory "views" do
           directory "admin" do
             directory "cms" do
-              directory "pages" do
+              directory "sheets" do
                 file "_form.html.haml" do
                   contains "form_for"
                 end
@@ -42,8 +42,8 @@ describe ActiveAdmin::Cms::PageGenerator do
       end
       directory "db" do
         directory "migrate" do
-          migration "create_pages" do
-            contains "class CreatePages < ActiveRecord::Migration"
+          migration "create_sheets" do
+            contains "class CreateSheets < ActiveRecord::Migration"
           end
         end
       end

@@ -7,7 +7,7 @@ describe ActiveAdmin::Cms::Content do
       @content = FactoryGirl.create(:content)
 
       @content.update_attributes({
-        :page => FactoryGirl.create(:page),
+        :sheet => FactoryGirl.create(:sheet),
         :text => '123',
         :key => 'xyz',
         :image => 'img1',
@@ -27,7 +27,7 @@ describe ActiveAdmin::Cms::Content do
       @content.text.to_html.should == "<h1>Test Heading</h1>\n"
     end
   end
-  
+
   describe 'setting content types' do
 
     before :each do
@@ -55,14 +55,14 @@ describe ActiveAdmin::Cms::Content do
 
     describe '#content_type=' do
       context 'when a class is passed' do
-        
+
         before :each do
           @content.content_type = ActiveAdmin::Cms::ContentTypes::Text
         end
 
         describe '#content_type_class' do
           subject {@content.content_type_class}
-          
+
           it {should == 'ActiveAdmin::Cms::ContentTypes::Text'}
         end
       end
@@ -74,7 +74,7 @@ describe ActiveAdmin::Cms::Content do
       @content = FactoryGirl.create(:content)
     end
 
-    context 'when the content type is string' do      
+    context 'when the content type is string' do
       before :each do
         @content.content_type = ActiveAdmin::Cms::ContentTypes::String
       end
@@ -85,7 +85,7 @@ describe ActiveAdmin::Cms::Content do
       end
     end
 
-    context 'when the content type is string' do      
+    context 'when the content type is string' do
       before :each do
         @content.content_type = ActiveAdmin::Cms::ContentTypes::Image
       end

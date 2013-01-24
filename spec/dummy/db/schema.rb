@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20120325191044) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "content", :force => true do |t|
-    t.integer  "page_id"
+    t.integer  "sheet_id"
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,9 +57,9 @@ ActiveRecord::Schema.define(:version => 20120325191044) do
     t.string   "file"
   end
 
-  add_index "content", ["page_id", "key"], :name => "index_content_on_page_id_and_key"
+  add_index "content", ["sheet_id", "key"], :name => "index_content_on_sheet_id_and_key"
 
-  create_table "pages", :force => true do |t|
+  create_table "sheets", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "recipe_id"
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(:version => 20120325191044) do
     t.text     "meta_description"
   end
 
-  add_index "pages", ["slug"], :name => "index_pages_on_slug"
-  add_index "pages", ["url"], :name => "index_pages_on_url"
+  add_index "sheets", ["slug"], :name => "index_sheets_on_slug"
+  add_index "sheets", ["url"], :name => "index_sheets_on_url"
 
   create_table "recipes", :force => true do |t|
     t.string   "title"

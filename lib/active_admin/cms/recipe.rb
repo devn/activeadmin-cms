@@ -4,7 +4,7 @@ module ActiveAdmin
 
       include Cms::Recipes::SectionHelper::SectionContainer
 
-      has_many :pages
+      has_many :sheets
 
       def self.define(&definition_block)
         after_initialize do
@@ -23,7 +23,7 @@ module ActiveAdmin
       def contains_content_key? content_key
         !!ingredient_for(content_key)
       end
-      
+
       def ingredient_for content_key
         section_keys = content_key.split ':'
         current_section = self

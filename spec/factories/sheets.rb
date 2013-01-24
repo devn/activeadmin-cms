@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :page do |p|
-    p.title 'A page'
+  factory :sheet do |p|
+    p.title 'A sheet'
     p.url '/'
     recipe
   end

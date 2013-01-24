@@ -35,7 +35,7 @@ require 'active_admin/cms/uploaders/large_image_uploader'
 require 'active_admin/cms/content'
 require 'active_admin/cms/content_type'
 require 'active_admin/cms/controller_extensions'
-require 'active_admin/cms/page'
+require 'active_admin/cms/sheet'
 require 'active_admin/cms/recipe'
 
 ActiveAdmin::Cms::Recipe.autoload :Ingredient, 'active_admin/cms/recipe/ingredient'

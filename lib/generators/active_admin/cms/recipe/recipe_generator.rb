@@ -11,10 +11,10 @@ module ActiveAdmin
 
       def self.source_root
         @_active_admin_cms_source_root ||= File.expand_path("../templates", __FILE__)
-      end  
+      end
 
       #def create_admin
-        #template 'admin/pages.rb.erb', "app/admin/#{plural_table_name}.rb"
+        #template 'admin/sheets.rb.erb', "app/admin/#{plural_table_name}.rb"
       #end
 
       def create_model
@@ -22,12 +22,12 @@ module ActiveAdmin
       end
 
       #def create_admin_views
-        #template 'views/admin/cms/pages/_form.html.haml', "app/views/admin/cms/#{plural_table_name}/_form.html.haml"
-        #template 'views/admin/cms/pages/_ingredient.html.haml', "app/views/admin/cms/#{plural_table_name}/_ingredient.html.haml"
-        #template 'views/admin/cms/pages/_section.html.haml', "app/views/admin/cms/#{plural_table_name}/_section.html.haml"
-        #template 'views/admin/cms/pages/_show.html.haml', "app/views/admin/cms/#{plural_table_name}/_show.html.haml"
+        #template 'views/admin/cms/sheets/_form.html.haml', "app/views/admin/cms/#{plural_table_name}/_form.html.haml"
+        #template 'views/admin/cms/sheets/_ingredient.html.haml', "app/views/admin/cms/#{plural_table_name}/_ingredient.html.haml"
+        #template 'views/admin/cms/sheets/_section.html.haml', "app/views/admin/cms/#{plural_table_name}/_section.html.haml"
+        #template 'views/admin/cms/sheets/_show.html.haml', "app/views/admin/cms/#{plural_table_name}/_show.html.haml"
       #end
-  
+
       #def create_migrations
         #Dir["#{self.class.source_root}/migrations/*.rb"].sort.each do |filepath|
           #name = File.basename(filepath)

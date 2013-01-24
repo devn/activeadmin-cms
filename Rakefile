@@ -5,6 +5,8 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 begin
+  require 'rake'
+  require 'rake/dsl_definition'
   require 'rdoc/task'
 rescue LoadError
   require 'rdoc/rdoc'

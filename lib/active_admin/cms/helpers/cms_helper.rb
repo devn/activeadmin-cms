@@ -1,10 +1,10 @@
 module ActiveAdmin
   module Cms
     module CmsHelper
-      def cms_content page, content_key, options = {}
-        raise Exceptions::MissingPage if !page
+      def cms_content sheet, content_key, options = {}
+        raise Exceptions::MissingSheet if !sheet
         #debugger
-        page.content_for(content_key).to_html(options).html_safe if page.content_for(content_key)
+        sheet.content_for(content_key).to_html(options).html_safe if sheet.content_for(content_key)
       end
     end
   end

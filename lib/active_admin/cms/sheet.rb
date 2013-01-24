@@ -1,9 +1,9 @@
 module ActiveAdmin
   module Cms
-    class Page < ActiveRecord::Base
+    class Sheet < ActiveRecord::Base
       validates :title, :presence => true
       validates :recipe_id, :presence => true
-    
+
       belongs_to :recipe
 
       has_many :content
@@ -11,24 +11,24 @@ module ActiveAdmin
 
       class << self
 
-        # Returns the Page for the associated url
+        # Returns the Sheet for the associated url
         def for_url(url)
           where(:url => url).first if where(:url => url).any?
         end
 
       end
 
-      # Return the content for the specified key on this page.
-      # Returns nil if the content key is not valid for the pages recipe.
+      # Return the content for the specified key on this sheet.
+      # Returns nil if the content key is not valid for the sheets recipe.
       # @example
-      #  @page.content_for 'left_column:supporting_text'
+      #  @sheet.content_for 'left_column:supporting_text'
       def content_for content_key
         ret = nil
         if recipe
           if recipe.contains_content_key?(content_key)
-            ret = Cms::Content.where(:page_id => id, :key => content_key)
+            ret = Cms::Content.where(:sheet_id => id, :key => content_key)
             if ret.length == 0
-              ret = Cms::Content.new(:page => self, :key => content_key)
+              ret = Cms::Content.new(:sheet => self, :key => content_key)
               ret.content_type = recipe.ingredient_for(content_key).content_type
             else
               ret = ret[0]
@@ -40,7 +40,7 @@ module ActiveAdmin
         return ret
       end
 
-      # Returns the html meta data for this page as a hash
+      # Returns the html meta data for this sheet as a hash
       def meta_data
         data = {}
         if meta_title and !meta_title.blank?
@@ -69,13 +69,13 @@ module ActiveAdmin
         end
       end
 
-      # Sets the content for the specified key on this page
+      # Sets the content for the specified key on this sheet
       # @example
-      #  @page.set_content 'left_section:headline', 'Something Cool'
+      #  @sheet.set_content 'left_section:headline', 'Something Cool'
       def set_content content_key, content
         if content.kind_of? Cms::Content
           content.key = content_key
-          content.page = self
+          content.sheet = self
           content.content_type = recipe.ingredient_for(content_key).content_type
           content.save
         end

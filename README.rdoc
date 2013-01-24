@@ -45,9 +45,9 @@ Create a new file in config/initializers called fog.rb to setup fog.
     config.fog_directory  = "mywebsite.co.uk"
   end
 
-=== Generate a page class
+=== Generate a sheet class
 
-  > rails g active_admin:cms:page Page
+  > rails g active_admin:cms:sheet Sheet
 
 === Generate a recipe
 

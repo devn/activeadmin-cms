@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe ActiveAdmin::Cms::Page do
+describe ActiveAdmin::Cms::Sheet do
 
   describe '::for' do
-    context 'given there is a page with a url' do
+    context 'given there is a sheet with a url' do
       before :each do
         #debugger
-        @page_1 = FactoryGirl.create(:page, :url => '/athing')
-        @page_2 = FactoryGirl.create(:page, :url => '/something')
+        @sheet_1 = FactoryGirl.create(:sheet, :url => '/athing')
+        @sheet_2 = FactoryGirl.create(:sheet, :url => '/something')
       end
 
       context 'when passed a url' do
 
-        subject{Page::for_url('/something')}
+        subject{Sheet::for_url('/something')}
 
-        it {should == @page_2}
+        it {should == @sheet_2}
 
       end
     end
@@ -22,22 +22,22 @@ describe ActiveAdmin::Cms::Page do
 
   describe '#content_for' do
     before :each do
-      @page = FactoryGirl.create(:page)
+      @sheet = FactoryGirl.create(:sheet)
     end
 
-    context 'when the page doesn`t have a recipe' do
-      subject {@page.content_for 'anything'}
+    context 'when the sheet doesn`t have a recipe' do
+      subject {@sheet.content_for 'anything'}
       it {should be_nil}
     end
 
-    context 'when the page has a recipe' do
+    context 'when the sheet has a recipe' do
       before :each do
         @recipe = FactoryGirl.create(:basic_recipe)
-        @page.recipe = @recipe
-        @page.save
+        @sheet.recipe = @recipe
+        @sheet.save
       end
       context 'when a content key is passed that is not valid for the specified recipe' do
-        subject {@page.content_for 'something:stupid'}
+        subject {@sheet.content_for 'something:stupid'}
         it {should be_nil}
       end
       context 'when a valid content key is passed' do
@@ -45,47 +45,47 @@ describe ActiveAdmin::Cms::Page do
           ActiveAdmin::Cms::Content.delete_all
         end
 
-        context 'when there isn`t already content with the specified page and content key' do
+        context 'when there isn`t already content with the specified sheet and content key' do
 
           context 'for a text ingredient' do
-            subject {@page.content_for('column:text_ingredient_1')}
+            subject {@sheet.content_for('column:text_ingredient_1')}
 
             it {should_not be_nil}
             it {should be_kind_of ActiveAdmin::Cms::Content}
-            its(:page) {should == @page}
+            its(:sheet) {should == @sheet}
             its(:content_type) {should == ActiveAdmin::Cms::ContentTypes::Text}
             its('text.to_s') {should == ''}
           end
-          
+
           context 'for a image ingredient' do
-            subject {@page.content_for('column:image_ingredient_1')}
+            subject {@sheet.content_for('column:image_ingredient_1')}
 
             it {should_not be_nil}
             it {should be_kind_of ActiveAdmin::Cms::Content}
-            its(:page) {should == @page}
+            its(:sheet) {should == @sheet}
             its(:content_type) {should == ActiveAdmin::Cms::ContentTypes::Image}
             its('text.to_s') {should == ''}
           end
         end
 
-        context 'when there is already content with the specified page and content key' do
+        context 'when there is already content with the specified sheet and content key' do
 
           before :each do
-            @text_content = FactoryGirl.create(:text_content, :key => 'column:text_ingredient_1', :page => @page, :text => '123')
+            @text_content = FactoryGirl.create(:text_content, :key => 'column:text_ingredient_1', :sheet => @sheet, :text => '123')
             #debugger
-            @image_content = FactoryGirl.create(:image_content, :key => 'column:image_ingredient_1', :page => @page)
-            
+            @image_content = FactoryGirl.create(:image_content, :key => 'column:image_ingredient_1', :sheet => @sheet)
+
           end
 
           context 'when searching for the text ingredient' do
-            subject {@page.content_for('column:text_ingredient_1')}
+            subject {@sheet.content_for('column:text_ingredient_1')}
 
             it {should_not be_nil}
             it {should == @text_content}
           end
-          
+
           context 'when searching for the image ingredient' do
-            subject {@page.content_for('column:image_ingredient_1')}
+            subject {@sheet.content_for('column:image_ingredient_1')}
 
             it {should_not be_nil}
             it {should == @image_content}
@@ -97,64 +97,64 @@ describe ActiveAdmin::Cms::Page do
 
   describe '#meta_data' do
 
-    subject {@page.meta_data}
+    subject {@sheet.meta_data}
 
     before :each do
-      @page = FactoryGirl.create(:page, :recipe => FactoryGirl.create(:basic_recipe))
+      @sheet = FactoryGirl.create(:sheet, :recipe => FactoryGirl.create(:basic_recipe))
     end
 
     it {should be_kind_of Hash}
 
     describe '[:title]' do
 
-      subject {@page.meta_data[:title]}
+      subject {@sheet.meta_data[:title]}
 
-      context 'when the page has a title' do
+      context 'when the sheet has a title' do
         before :each do
-          @page.title = 'A page'
-          @page.save
+          @sheet.title = 'A sheet'
+          @sheet.save
         end
-        context 'when the page has a specific meta title set' do
+        context 'when the sheet has a specific meta title set' do
           before :each do
-            @page.meta_title = 'A title'
-            @page.save
+            @sheet.meta_title = 'A title'
+            @sheet.save
           end
 
-          it {should == @page.meta_title}
+          it {should == @sheet.meta_title}
         end
-        context 'when the page doesn`t have a specific meta title' do
-          it {should == "#{ActiveAdmin::Cms::SITE_TITLE} | #{@page.title}"}  
+        context 'when the sheet doesn`t have a specific meta title' do
+          it {should == "#{ActiveAdmin::Cms::SITE_TITLE} | #{@sheet.title}"}
         end
       end
 
-      context 'when the page doesn`t have a title' do
+      context 'when the sheet doesn`t have a title' do
         before :each do
-          @page.title = ''
-          @page.save
+          @sheet.title = ''
+          @sheet.save
         end
-        context 'when the page has a specific meta title set' do
+        context 'when the sheet has a specific meta title set' do
           before :each do
-            @page.meta_title = 'A title'
-            @page.save
+            @sheet.meta_title = 'A title'
+            @sheet.save
           end
 
-          it {should == @page.meta_title}
+          it {should == @sheet.meta_title}
         end
-        context 'when the page doesn`t have a specific meta title' do
-          it {should == "#{ActiveAdmin::Cms::SITE_TITLE}"}  
+        context 'when the sheet doesn`t have a specific meta title' do
+          it {should == "#{ActiveAdmin::Cms::SITE_TITLE}"}
         end
       end
     end
 
     describe '[:description]' do
-      subject {@page.meta_data[:description]}
+      subject {@sheet.meta_data[:description]}
 
       context 'when meta description has been set' do
         before :each do
-          @page.meta_description = 'desc 123'
-          @page.save
+          @sheet.meta_description = 'desc 123'
+          @sheet.save
         end
-        it {should == @page.meta_description}
+        it {should == @sheet.meta_description}
       end
 
       context 'when meta keywords have not been set' do
@@ -163,14 +163,14 @@ describe ActiveAdmin::Cms::Page do
     end
 
     describe '[:keywords]' do
-      subject {@page.meta_data[:keywords]}
+      subject {@sheet.meta_data[:keywords]}
 
       context 'when meta keywords have been set' do
         before :each do
-          @page.meta_keywords = 'key 123'
-          @page.save
+          @sheet.meta_keywords = 'key 123'
+          @sheet.save
         end
-        it {should == @page.meta_keywords}
+        it {should == @sheet.meta_keywords}
       end
 
       context 'when meta keywords have not been set' do
@@ -181,33 +181,33 @@ describe ActiveAdmin::Cms::Page do
 
   describe '#set_content' do
 
-    subject{@page}
+    subject{@sheet}
 
     before :each do
-      @page = FactoryGirl.create(:page, :recipe => FactoryGirl.create(:basic_recipe))
+      @sheet = FactoryGirl.create(:sheet, :recipe => FactoryGirl.create(:basic_recipe))
     end
 
-    context 'when the content_key is valid for the pages recipe' do
+    context 'when the content_key is valid for the sheets recipe' do
 
       context 'when given an existing content item' do
 
         before :each do
           @content = FactoryGirl.create(:content)
-          @page.set_content 'column:text_ingredient_1', @content
+          @sheet.set_content 'column:text_ingredient_1', @content
         end
 
-        subject{@page.content.reload}
+        subject{@sheet.content.reload}
 
         its(:length) {should == 1}
 
         describe 'the passed content item' do
           subject {@content.reload}
-          
+
           its(:key) {should == 'column:text_ingredient_1'}
-        end 
+        end
 
         describe 'the created content item' do
-          subject{@page.content_for('column:text_ingredient_1')}
+          subject{@sheet.content_for('column:text_ingredient_1')}
 
           its(:id) {should == @content.id}
           its('text.to_s') {should == @content.text.to_s}
@@ -216,7 +216,7 @@ describe ActiveAdmin::Cms::Page do
       end
     end
     context 'when an invalid content_key is passed' do
-    
+
       # pending 'it should throw an error'
 
     end
@@ -225,15 +225,15 @@ describe ActiveAdmin::Cms::Page do
 
   describe '#set_value' do
     before :each do
-      @page = FactoryGirl.create(:page, :recipe => FactoryGirl.create(:basic_recipe))
+      @sheet = FactoryGirl.create(:sheet, :recipe => FactoryGirl.create(:basic_recipe))
     end
 
     context 'when passed a content_key => text hash' do
       it 'should set the text for each of the of the content records' do
-      @page.set_value 'column:text_ingredient_1' => '123', 'footer:address' => '456'
+      @sheet.set_value 'column:text_ingredient_1' => '123', 'footer:address' => '456'
 
-      @page.content_for('column:text_ingredient_1').text.to_s.should == "123"
-      @page.content_for('footer:address').text.to_s.should == '456'
+      @sheet.content_for('column:text_ingredient_1').text.to_s.should == "123"
+      @sheet.content_for('footer:address').text.to_s.should == '456'
 end
     end
   end

@@ -13,10 +13,10 @@ module ActiveAdmin
         end
 
         def add_fields_to(formtastic_form)
-          page = formtastic_form.object
-          content = page.content_for content_key
+          sheet = formtastic_form.object
+          content = sheet.content_for content_key
           #debugger
-          fields = formtastic_form.fields_for(content) do |i_form|     
+          fields = formtastic_form.fields_for(content) do |i_form|
             i_form.inputs do
               i_form.input :text
             end
@@ -29,13 +29,13 @@ module ActiveAdmin
         def content_key
           return "#{section.section_key}:#{id}" if section
           id
-        end 
+        end
 
         def input_settings opts = {}
           opts[:prefix]
-          
+
           input_options = {:label => title, :input_html => {:name => "content[#{content_key}]", :id => content_key.to_s.gsub(':', '__')}}
-          
+
           input_options[:hint] ||= description if description
           input_options[:hint] ||= content_type.description if !description and !content_type.description.blank?
           input_options.merge! @options if @options
